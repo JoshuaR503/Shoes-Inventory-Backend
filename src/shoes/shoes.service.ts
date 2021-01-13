@@ -16,7 +16,12 @@ export class ShoesService {
         return this.repository.findOne({id});
     }
 
+    async getShoes(): Promise<Shoe[]> {
+        return this.repository.find();
+    }
+
     async createShoe(createShoeInput: CreateShoeInput): Promise<Shoe> {
+        
         const shoe = this.repository.create({
             id: uuid(),
             ...createShoeInput

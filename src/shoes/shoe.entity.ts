@@ -1,4 +1,5 @@
-import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
+import { User } from "src/auth/user.entity";
+import { Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Shoe {
@@ -36,4 +37,9 @@ export class Shoe {
     @Column()
     salePrice: number;
 
+    @ManyToOne(type => User, user => user.shoes, {eager: false})
+    user: User;
+
+    @Column()
+    userId: number;
 }
