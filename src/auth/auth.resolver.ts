@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { UserType } from './authType';
-import { LoginAuthInput } from './login.input';
+import { UserType } from './user.type';
+import { LoginInput } from './types/login.input';
 
 @Resolver(() => UserType)
 export class AuthResolver {
@@ -11,18 +11,12 @@ export class AuthResolver {
     ) {}
 
     @Mutation(() => Boolean)
-    async signUp(
-        @Args('username') username: string,
-        @Args('password') password: string
-    ) {
-        return await this.authService.signUp(username, password);
+    async signUp(@Args('loginInput') loginInput: LoginInput) {
+        return await this.authService.signUp(loginInput);
     }
 
-    @Mutation(() => String)
-    async signIn(
-        @Args('username') username: string,
-        @Args('password') password: string
-    ) {
-        return await this.authService.signIn(username, password);
+    @Mutation(() => UserType)
+    async signIn(@Args('loginInput') loginInput: LoginInput) {
+        return await this.authService.signIn(loginInput);
     }
 }
