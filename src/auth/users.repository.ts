@@ -1,38 +1,39 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { ConflictException, InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { User } from './user.entity';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { username, password } = authCredentialsDto;
+
+  async signUp(username: string, password: string): Promise<boolean> {
 
     const user = new User();
     user.username = username;
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
+    user.shoes = [];
 
     try {
       await user.save();
+      return true
     } catch (error) {
-      if (error.code === '23505') { // duplicate username
-        throw new ConflictException('Username already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      console.log(error);
+      throw new InternalServerErrorException();
     }
   }
 
-  async validateUserPassword(authCredentialsDto: AuthCredentialsDto): Promise<string> {
-    const { username, password } = authCredentialsDto;
+  async signIn(username: string, password: string): Promise<User> {
+      
     const user = await this.findOne({ username });
 
     if (user && await user.validatePassword(password)) {
-      return user.username;
+      delete user.password;
+      delete user.salt;
+      
+      return user;
     } else {
-      return null;
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 

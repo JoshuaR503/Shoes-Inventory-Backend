@@ -3,6 +3,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Shoe } from './shoes/shoe.entity';
 import { ShoesModule } from './shoes/shoes.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './auth/user.entity';
 
 @Module({
   imports: [
@@ -12,14 +14,16 @@ import { ShoesModule } from './shoes/shoes.module';
       synchronize: true,
       useUnifiedTopology: true,
       entities: [
-        Shoe
+        Shoe,
+        User
       ]
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+      
     }),
-    ShoesModule
+    ShoesModule,
+    AuthModule,
   ],
-  providers: [],
 })
 export class AppModule {}

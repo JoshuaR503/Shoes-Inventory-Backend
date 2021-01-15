@@ -1,14 +1,16 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, Column, Entity, ObjectIdColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm";
 import * as bcrypt from 'bcryptjs';
-import { Shoe } from "src/shoes/shoe.entity";
-
+import { Shoe } from "../shoes/shoe.entity";
 
 @Entity()
 @Unique(['username'])
 export class User extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @ObjectIdColumn()
+    _id: string;
+
+    @PrimaryColumn()
+    id: string;
 
     @Column()
     username: string;
