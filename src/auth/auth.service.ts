@@ -1,40 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginInput } from './types/login.input';
-import { User } from './user.entity';
-import { UserType } from './user.type';
-import { UserRepository } from './users.repository';
-
-export interface JwtPayload {
-  username: string;
-}
+import { UserRepository } from './user.repository';
+import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async signUp(loginInput: LoginInput): Promise<boolean> {
-    return await this.userRepository.signUp(loginInput);
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+    return await this.userRepository.signUp(authCredentialsDto);
   }
-  
-  async signIn(loginInput: LoginInput): Promise<UserType> {
 
-    /// Find user in database.
-    const dbUser = await this.userRepository.signIn(loginInput);
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ accessToken: string }> {
+    const username = await this.userRepository.validateUserPassword(authCredentialsDto);
 
-    /// Create a JWT token.
-    const token = this.jwtService.sign({dbUser});
+    if (!username) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
 
-    /// Combine token with user to match the user type.
-    const userType = {token, ...dbUser};
+    const payload: JwtPayload = { username };
+    const accessToken = this.jwtService.sign(payload);
 
-    /// Return data.
-    return userType;
+    return { accessToken };
   }
 }

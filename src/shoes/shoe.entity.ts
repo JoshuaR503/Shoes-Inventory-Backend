@@ -1,15 +1,14 @@
-// import { User } from "src/auth/user.entity";
-import { User } from "src/auth/user.entity";
-import { Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from "typeorm";
+import { UserEntity } from "src/auth/user.entity";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Shoe {
+export class ShoeEntity extends BaseEntity {
 
-    @ObjectIdColumn()
-    _id: string;
-
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: string;
+
+    @Column()
+    title: string;
 
     @Column()
     writtenCode: string;
@@ -38,8 +37,8 @@ export class Shoe {
     @Column()
     salePrice: number;
 
-    @ManyToOne(type => User, user => user.shoes, {eager: false})
-    user: User;
+    @ManyToOne(type => UserEntity, user => user.shoes, {eager: false})
+    user: UserEntity;
 
     @Column()
     userId: number;

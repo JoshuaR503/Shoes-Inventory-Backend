@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Shoe } from './shoes/shoe.entity';
 import { ShoesModule } from './shoes/shoes.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './auth/user.entity';
+import { UserEntity } from './auth/user.entity';
+import { ShoeEntity } from './shoes/shoe.entity';
 
 @Module({
   imports: [
@@ -13,14 +12,11 @@ import { User } from './auth/user.entity';
       url: 'mongodb://localhost/shoes',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [
-        Shoe,
-        User
-      ]
-    }),
-    GraphQLModule.forRoot({
-      autoSchemaFile: true,
       
+      entities: [
+        ShoeEntity,
+        UserEntity
+      ]
     }),
     ShoesModule,
     AuthModule,

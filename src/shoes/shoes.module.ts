@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Shoe } from './shoe.entity';
-import { ShoeResolver } from './shoe.resolver';
 import { ShoesService } from './shoes.service';
+import { ShoesController } from './shoes.controller';
+import { ShoeRepository } from './shoe.repository';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Shoe])
+        TypeOrmModule.forFeature([ShoeRepository]),
+        AuthModule
     ],
-    providers: [
-        ShoeResolver, 
-        ShoesService
-    ]
+    controllers: [ShoesController],
+    providers: [ShoesService]
 })
 export class ShoesModule {}

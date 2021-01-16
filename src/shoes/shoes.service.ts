@@ -1,32 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Shoe } from './shoe.entity';
-import {v4 as uuid} from 'uuid';
-import { CreateShoeInput } from './shoe.input';
+import { ShoeEntity } from './shoe.entity';
+import { GetShoeDTO } from './dtos/create-shoe.dto';
+import { UserEntity } from 'src/auth/user.entity';
+import { ShoeRepository } from './shoe.repository';
 
 @Injectable()
 export class ShoesService {
 
     constructor(
-        @InjectRepository(Shoe) private repository: Repository<Shoe>
+        @InjectRepository(ShoeRepository) private repository: ShoeRepository
     ) {}
 
-    async getShoe(id: string): Promise<Shoe> {
-        return this.repository.findOne({id});
+    async getShoes(data: GetShoeDTO, user: UserEntity): Promise<ShoeEntity[]> {
+        return this.repository.getShoes(data, user);
     }
 
-    async getShoes(): Promise<Shoe[]> {
-        return this.repository.find();
-    }
+    // async getShoe(id: string): Promise<ShoeEntity> {
+    //     return this.repository.findOne({id});
+    // }
 
-    async createShoe(createShoeInput: CreateShoeInput): Promise<Shoe> {
+    
+
+    // async createShoe(createShoeInput: CreateShoeInput): Promise<Shoe> {
         
-        const shoe = this.repository.create({
-            id: uuid(),
-            ...createShoeInput
-        });
+    //     const shoe = this.repository.create({
+    //         id: uuid(),
+    //         ...createShoeInput
+    //     });
 
-        return this.repository.save(shoe);
-    }
+    //     return this.repository.save(shoe);
+    // }
 }
