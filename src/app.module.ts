@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShoesModule } from './shoes/shoes.module';
 import { AuthModule } from './auth/auth.module';
-import { UserEntity } from './auth/user.entity';
-import { ShoeEntity } from './shoes/shoe.entity';
+import { User } from './auth/user.entity';
+import { Shoe } from './shoes/shoe.entity';
 
 @Module({
   imports: [
@@ -12,10 +12,9 @@ import { ShoeEntity } from './shoes/shoe.entity';
       url: 'mongodb://localhost/shoes',
       synchronize: true,
       useUnifiedTopology: true,
-      
       entities: [
-        ShoeEntity,
-        UserEntity
+        Shoe,
+        User
       ]
     }),
     ShoesModule,

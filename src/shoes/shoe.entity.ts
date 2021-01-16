@@ -1,8 +1,8 @@
-import { UserEntity } from "src/auth/user.entity";
+import { User } from "src/auth/user.entity";
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class ShoeEntity extends BaseEntity {
+export class Shoe extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: string;
@@ -37,8 +37,8 @@ export class ShoeEntity extends BaseEntity {
     @Column()
     salePrice: number;
 
-    @ManyToOne(type => UserEntity, user => user.shoes, {eager: false})
-    user: UserEntity;
+    @ManyToOne(type => User, user => user.shoes, {eager: false})
+    user: User;
 
     @Column()
     userId: number;

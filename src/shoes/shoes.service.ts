@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ShoeEntity } from './shoe.entity';
+import { Shoe } from './shoe.entity';
 import { GetShoeDTO } from './dtos/create-shoe.dto';
-import { UserEntity } from 'src/auth/user.entity';
+import { User } from 'src/auth/user.entity';
 import { ShoeRepository } from './shoe.repository';
 
 @Injectable()
@@ -12,11 +12,11 @@ export class ShoesService {
         @InjectRepository(ShoeRepository) private repository: ShoeRepository
     ) {}
 
-    async getShoes(data: GetShoeDTO, user: UserEntity): Promise<ShoeEntity[]> {
+    async getShoes(data: GetShoeDTO, user: User): Promise<Shoe[]> {
         return this.repository.getShoes(data, user);
     }
 
-    // async getShoe(id: string): Promise<ShoeEntity> {
+    // async getShoe(id: string): Promise<Shoe> {
     //     return this.repository.findOne({id});
     // }
 

@@ -1,13 +1,16 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, Column, Entity, ObjectIdColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm";
 import * as bcrypt from 'bcryptjs';
-import { ShoeEntity } from "src/shoes/shoe.entity";
+import { Shoe } from "src/shoes/shoe.entity";
 
 @Entity()
 @Unique(['username'])
-export class UserEntity extends BaseEntity {
+export class User extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @ObjectIdColumn()
+    _id: string;
+
+    @PrimaryColumn()
+    id: string;
 
     @Column()
     username: string;
@@ -18,8 +21,8 @@ export class UserEntity extends BaseEntity {
     @Column()
     salt: string;
 
-    @OneToMany(type => ShoeEntity, shoe => shoe.user, {eager: true})
-    shoes: ShoeEntity[];
+    @OneToMany(type => Shoe, shoe => shoe.user, {eager: true})
+    shoes: Shoe[];
 
     async validatePassword(password: string): Promise<boolean> {
         const hash = await bcrypt.hash(password, this.salt);

@@ -1,15 +1,15 @@
 import { InternalServerErrorException, Logger } from "@nestjs/common";
-import { UserEntity } from "src/auth/user.entity";
+import { User } from "src/auth/user.entity";
 import { EntityRepository, Repository } from "typeorm";
 import { GetShoeDTO } from "./dtos/create-shoe.dto";
-import { ShoeEntity } from "./shoe.entity";
+import { Shoe } from "./shoe.entity";
 
-@EntityRepository(ShoeEntity)
-export  class ShoeRepository extends Repository<ShoeEntity> {
+@EntityRepository(Shoe)
+export  class ShoeRepository extends Repository<Shoe> {
 
     private logger = new Logger('Task Repository');
 
-    async getShoes(data: GetShoeDTO, user: UserEntity ): Promise<ShoeEntity[]> {
+    async getShoes(data: GetShoeDTO, user: User ): Promise<Shoe[]> {
 
         const { search } = data;
         const query = this.createQueryBuilder('task');
