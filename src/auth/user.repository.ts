@@ -3,6 +3,7 @@ import { ConflictException, InternalServerErrorException, UnauthorizedException 
 import * as bcrypt from 'bcryptjs';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
+import { v4 as uuid } from 'uuid';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -12,19 +13,24 @@ export class UserRepository extends Repository<User> {
     const { username, password } = authCredentialsDto;
     const user = new User();
     
+    user.id = uuid();
     user.username = username;
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
 
     try {
+
       await user.save();
+
     } catch (error) {
+
       console.log(error);
+
       if (error.code === 11000) {
         throw new ConflictException('The username has alreay been taken.');
       } else {
         throw new InternalServerErrorException();
-      } 
+      }
     }
   }
 

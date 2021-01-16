@@ -1,10 +1,13 @@
 import { User } from "src/auth/user.entity";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Shoe extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
+    @ObjectIdColumn()
+    _id: string;
+
+    @PrimaryColumn()
     id: string;
 
     @Column()
@@ -20,7 +23,7 @@ export class Shoe extends BaseEntity {
     size: string;
 
     @Column()
-    quantity: number;
+    quantity: string;
 
     @Column()
     note: string;
@@ -29,17 +32,17 @@ export class Shoe extends BaseEntity {
     entryDate: string;
 
     @Column()
-    magazinePrice: number;
+    magazinePrice: string;
 
     @Column()
-    specialPrice: number;
+    specialPrice: string;
 
     @Column()
-    salePrice: number;
+    salePrice: string;
 
-    @ManyToOne(type => User, user => user.shoes, {eager: false})
-    user: User;
+    // @ManyToOne(type => User, user => user.shoes, {eager: false})
+    // user: User;
 
     @Column()
-    userId: number;
+    userId: string;
 }
