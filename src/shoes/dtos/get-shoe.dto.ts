@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsOptional } from "class-validator";
+import { Type} from 'class-transformer';
+import { IsBoolean, IsBooleanString, IsNotEmpty, IsOptional } from "class-validator";
 
 export class GetShoeDTO {
     @IsOptional()
@@ -8,4 +9,10 @@ export class GetShoeDTO {
     @IsOptional()
     @IsNotEmpty()
     color: string;
+    
+    @IsOptional()
+    @IsNotEmpty()
+    @IsBoolean()
+    @Type(()=>Boolean)
+    archived: boolean;
 }

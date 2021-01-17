@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsUUID } from "class-validator";
+import { IsOptional } from "class-validator";
 
 export class CreateShoeDTO {
     @IsOptional()
@@ -27,6 +27,9 @@ export class CreateShoeDTO {
 
     @IsOptional()
     specialPrice: string;
+
+    @IsOptional()
+    archived: boolean;
 
     @IsOptional()
     salePrice: string;

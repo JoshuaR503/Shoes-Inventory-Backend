@@ -5,6 +5,7 @@ import { CreateShoeDTO } from "./dtos/create-shoe.dto";
 import { GetShoeDTO } from "./dtos/get-shoe.dto";
 import { Shoe } from "./shoe.entity";
 import { v4 as uuid } from 'uuid';
+import { ArchiveShoeDTo } from "./dtos/archive-shoe.dto";
 
 @EntityRepository(Shoe)
 export  class ShoeRepository extends Repository<Shoe> {
@@ -24,8 +25,11 @@ export  class ShoeRepository extends Repository<Shoe> {
     }
 
     async getShoes(data: GetShoeDTO, user: User): Promise<Shoe[]> {
+
+        const { archived } = data;
+        
         return await this
-        .find({userId: user.id})
+        .find({userId: user.id, archived: false})
         .catch((error) => {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
@@ -41,6 +45,15 @@ export  class ShoeRepository extends Repository<Shoe> {
             this.logger.error("There was an error saving a document.", error.stack);
             throw new InternalServerErrorException();
         })
+    }
+
+    async archiveShoe(id: string, data: ArchiveShoeDTo, user: User): Promise<Shoe> {
+
+        const shoe = await this.getShoe(id, user);
+
+        shoe.archived = data.archive;
+
+        return await shoe.save();
     }
 
     async updateShoe(id: string, data: CreateShoeDTO, user: User): Promise<Shoe> {

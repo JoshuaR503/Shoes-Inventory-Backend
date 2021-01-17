@@ -39,6 +39,9 @@ export class Shoe extends BaseEntity {
     @Column()
     salePrice: string;
 
+    @Column({default: false})
+    archived: boolean;
+
     // @ManyToOne(type => User, user => user.shoes, {eager: false})
     // user: User;
 

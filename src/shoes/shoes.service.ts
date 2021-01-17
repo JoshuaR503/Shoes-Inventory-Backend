@@ -5,6 +5,7 @@ import { GetShoeDTO } from './dtos/get-shoe.dto';
 import { User } from 'src/auth/user.entity';
 import { ShoeRepository } from './shoe.repository';
 import { CreateShoeDTO } from './dtos/create-shoe.dto';
+import { ArchiveShoeDTo } from './dtos/archive-shoe.dto';
 
 @Injectable()
 export class ShoesService {
@@ -27,6 +28,10 @@ export class ShoesService {
 
     async updateShoe(id: string, data: CreateShoeDTO, user: User): Promise<Shoe> {
         return this.repository.updateShoe(id, data, user);
+    }
+
+    async archiveShoe(id: string, data: ArchiveShoeDTo, user: User): Promise<Shoe> {
+        return this.repository.archiveShoe(id, data, user);
     }
 
     async deleteShoe(id: string, user: User): Promise<void> {
