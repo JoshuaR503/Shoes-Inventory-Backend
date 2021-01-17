@@ -13,6 +13,10 @@ export class ShoesService {
         @InjectRepository(ShoeRepository) private repository: ShoeRepository
     ) {}
 
+    async getShoe(id: string, user: User): Promise<Shoe> {
+        return await this.repository.getShoe(id, user);
+    }
+
     async getShoes(data: GetShoeDTO, user: User): Promise<Shoe[]> {
         return await this.repository.getShoes(data, user);
     }

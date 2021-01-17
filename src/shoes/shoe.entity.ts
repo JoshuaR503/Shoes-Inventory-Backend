@@ -1,5 +1,4 @@
-import { User } from "src/auth/user.entity";
-import { BaseEntity, Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Shoe extends BaseEntity {
