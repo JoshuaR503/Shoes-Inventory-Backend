@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post, Put, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
@@ -55,10 +55,10 @@ export class ShoesController {
     @UsePipes(ValidationPipe)
     archiveShoe(
         @Param('id') id: string,
-        @Body() data: ArchiveShoeDTo,
+        @Body('archived', ParseBoolPipe) archived: boolean,
         @GetUser() user: User,
     ): Promise<Shoe> { 
-        return this.shoesService.archiveShoe(id, data, user);
+        return this.shoesService.archiveShoe(id, archived, user);
     }
 
     @Delete('/:id')

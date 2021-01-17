@@ -29,7 +29,7 @@ export  class ShoeRepository extends Repository<Shoe> {
         const { archived } = data;
         
         return await this
-        .find({userId: user.id, archived: false})
+        .find({userId: user.id})
         .catch((error) => {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
@@ -47,11 +47,11 @@ export  class ShoeRepository extends Repository<Shoe> {
         })
     }
 
-    async archiveShoe(id: string, data: ArchiveShoeDTo, user: User): Promise<Shoe> {
+    async archiveShoe(id: string, data: boolean, user: User): Promise<Shoe> {
 
         const shoe = await this.getShoe(id, user);
 
-        shoe.archived = data.archive;
+        shoe.archived = data;
 
         return await shoe.save();
     }

@@ -30,7 +30,7 @@ export class ShoesService {
         return this.repository.updateShoe(id, data, user);
     }
 
-    async archiveShoe(id: string, data: ArchiveShoeDTo, user: User): Promise<Shoe> {
+    async archiveShoe(id: string, data: boolean, user: User): Promise<Shoe> {
         return this.repository.archiveShoe(id, data, user);
     }
 
