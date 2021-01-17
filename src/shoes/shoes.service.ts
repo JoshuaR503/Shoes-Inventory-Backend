@@ -24,4 +24,12 @@ export class ShoesService {
     async createShoe(data: CreateShoeDTO, user: User): Promise<Shoe> {
         return this.repository.createShoe(data, user);
     }
+
+    async updateShoe(id: string, data: CreateShoeDTO, user: User): Promise<Shoe> {
+        return this.repository.updateShoe(id, data, user);
+    }
+
+    async deleteShoe(id: string, user: User): Promise<void> {
+        return this.repository.deleteShoe(id, user);
+    }
 }

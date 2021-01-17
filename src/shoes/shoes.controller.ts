@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
@@ -31,8 +31,6 @@ export class ShoesController {
         return this.shoesService.getShoe(id, user);
     }
     
-    
-
     @Post()
     @UsePipes(ValidationPipe)
     createShoe(
@@ -40,6 +38,25 @@ export class ShoesController {
         @GetUser() user: User,
     ): Promise<Shoe> { 
         return this.shoesService.createShoe(shoesDTO, user);
+    }
+
+    @Put('/:id')
+    @UsePipes(ValidationPipe)
+    updateShoe(
+        @Param('id') id: string,
+        @Body() shoesDTO: CreateShoeDTO,
+        @GetUser() user: User,
+    ): Promise<Shoe> { 
+        return this.shoesService.updateShoe(id, shoesDTO, user);
+    }
+
+    @Delete('/:id')
+    @UsePipes(ValidationPipe)
+    deleteShoe(
+        @Param('id') id: string,
+        @GetUser() user: User,
+    ): Promise<void> { 
+        return this.shoesService.deleteShoe(id, user);
     }
 
 }
