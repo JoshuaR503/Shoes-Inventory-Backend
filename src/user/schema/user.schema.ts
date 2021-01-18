@@ -6,12 +6,8 @@ import { UserRole } from "../user.role";
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({versionKey: false})
 export class User {
-
-    // @ObjectIdColumn()
-    // _id: string;
-
     @Prop()
     id: string;
 
@@ -24,11 +20,8 @@ export class User {
     @Prop()
     password: string;
 
-
     @Prop({default: 'user'})
     role: string;
-
-    
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
