@@ -19,8 +19,8 @@ export class ShoesController {
     constructor(private shoesService: ShoesService) {}
 
     @Get()
-    @UseGuards(RolesGuard)
-    @Roles(UserRole.USER)
+    // @UseGuards(RolesGuard)
+    // @Roles(UserRole.USER)
     getShoes(
         @Query(ValidationPipe) shoesDTO: GetShoeDTO,
         @GetUser() user: User,
