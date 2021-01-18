@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post, Put, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { User } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { User } from 'src/auth/user/user.entity';
+import { UserRole } from 'src/auth/user/user.role';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
-import { ArchiveShoeDTo } from './dtos/archive-shoe.dto';
 import { CreateShoeDTO } from './dtos/create-shoe.dto';
 import { GetShoeDTO } from './dtos/get-shoe.dto';
 import { Shoe } from './shoe.entity';
@@ -16,6 +18,9 @@ export class ShoesController {
     constructor(private shoesService: ShoesService) {}
 
     @Get()
+    @Roles(UserRole.EDITOR)
+    @UseGuards(RolesGuard)
+
     getShoes(
         @Query(ValidationPipe) shoesDTO: GetShoeDTO,
         @GetUser() user: User,
