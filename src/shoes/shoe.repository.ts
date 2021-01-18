@@ -68,7 +68,7 @@ export  class ShoeRepository extends Repository<Shoe> {
         .catch((error) => {
             this.logger.error("There was an error saving a document.", error.stack);
             throw new InternalServerErrorException();
-        })
+        });
     }
 
     /**
@@ -88,7 +88,12 @@ export  class ShoeRepository extends Repository<Shoe> {
         shoe.archived = archived;
 
         /// Save and return.
-        return await shoe.save();
+        return await shoe
+        .save()
+        .catch((error) => {
+            this.logger.error("There was an error updating a document.", error.stack);
+            throw new InternalServerErrorException();
+        });
     }
 
     /**
@@ -118,7 +123,12 @@ export  class ShoeRepository extends Repository<Shoe> {
         shoe.salePrice = data.salePrice;
 
         /// Save and return the shoe in the database.
-        return await shoe.save();
+        return await shoe
+        .save()
+        .catch((error) => {
+            this.logger.error("There was an error updating a document.", error.stack);
+            throw new InternalServerErrorException();
+        });
     }
 
     /**
@@ -132,7 +142,12 @@ export  class ShoeRepository extends Repository<Shoe> {
         const shoe = await this.getShoe(id, user);
 
         /// Delete shoe from the database.
-        await this.delete(shoe);
+        await this
+        .delete(shoe)
+        .catch((error) => {
+            this.logger.error("There was an error deleting a document.", error.stack);
+            throw new InternalServerErrorException();
+        });
 
     }
 }
