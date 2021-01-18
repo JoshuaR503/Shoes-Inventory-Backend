@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, InternalServerErrorException, Logger } from "@nestjs/common";
-import { User } from "src/auth/user/user.entity";
+import { User } from "src/user/schema/user.schema";
 import { EntityRepository, Repository } from "typeorm";
 import { CreateShoeDTO } from "./dtos/create-shoe.dto";
 import { GetShoeDTO } from "./dtos/get-shoe.dto";

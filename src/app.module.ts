@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ShoesModule } from './shoes/shoes.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './auth/user/user.entity';
-import { Shoe } from './shoes/shoe.entity';
+import { UserModule } from './user/user.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb://localhost/shoes',
-      synchronize: true,
-      useUnifiedTopology: true,
-      entities: [
-        Shoe,
-        User
-      ]
-    }),
-    ShoesModule,
+    // TypeOrmModule.forRoot({
+    //   type: 'mongodb',
+    //   url: 'mongodb://localhost/shoes',
+    //   synchronize: true,
+    //   useUnifiedTopology: true,
+    //   entities: [
+    //     Shoe,
+    //     User
+    //   ]
+    // }),
+    MongooseModule.forRoot('mongodb://localhost/shoes', {useCreateIndex: true, useFindAndModify: false}),
+    // ShoesModule,
     AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

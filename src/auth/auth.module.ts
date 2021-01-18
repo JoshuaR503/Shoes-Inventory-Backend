@@ -5,7 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './guards/jwt.strategy';
-import { UserRepository } from './user/user.repository';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from 'src/user/schema/user.schema';
 
 @Module({
   imports: [
@@ -16,7 +17,12 @@ import { UserRepository } from './user/user.repository';
         expiresIn: '3400s'
       }
     }),
-    TypeOrmModule.forFeature([UserRepository])
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema:  UserSchema
+      }
+    ])
   ],
   controllers: [AuthController],
   providers: [

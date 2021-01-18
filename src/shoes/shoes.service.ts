@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Shoe } from './shoe.entity';
 import { GetShoeDTO } from './dtos/get-shoe.dto';
-import { User } from 'src/auth/user/user.entity';
+import { User } from 'src/user/schema/user.schema';
 import { ShoeRepository } from './shoe.repository';
 import { CreateShoeDTO } from './dtos/create-shoe.dto';
 import { ArchiveShoeDTo } from './dtos/archive-shoe.dto';
