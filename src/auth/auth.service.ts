@@ -17,12 +17,17 @@ export class AuthService {
     return await this.userRepository.signUp(authCredentialsDto);
   }
 
-  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ accessToken: string }> {
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ token: string }> {
 
     const dbUsername = await this.userRepository.signIn(authCredentialsDto);
-    const payload: JwtPayload = { username: dbUsername };
-    const accessToken = this.jwtService.sign(payload);
+    
+    const payload: JwtPayload = { 
+      id: dbUsername.id,
+      role: dbUsername.role 
+    };
+    
+    const token = this.jwtService.sign(payload);
 
-    return { accessToken };
+    return { token };
   }
 }

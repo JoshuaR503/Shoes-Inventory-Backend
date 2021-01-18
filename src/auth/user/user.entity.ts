@@ -2,7 +2,6 @@ import { BaseEntity, Column, Entity, ObjectIdColumn, PrimaryColumn, Unique } fro
 import * as bcrypt from 'bcryptjs';
 import { UserRole } from "./user.role";
 
-
 @Entity()
 @Unique(['username'])
 export class User extends BaseEntity {
@@ -21,7 +20,6 @@ export class User extends BaseEntity {
 
     @Column()
     salt: string;
-
 
     @Column({type: 'enum', enum: UserRole, default: UserRole.USER})
     role: UserRole;

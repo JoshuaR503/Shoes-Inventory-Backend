@@ -1,4 +1,5 @@
 import { IsOptional } from "class-validator";
+import { UserRole } from "src/auth/user/user.role";
 
 export class CreateShoeDTO {
     @IsOptional()

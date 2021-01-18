@@ -13,14 +13,14 @@ import { ShoesService } from './shoes.service';
 
 @Controller('shoes')
 @UseGuards(AuthGuard())
+@UseFilters(new HttpExceptionFilter())
 export class ShoesController {
 
     constructor(private shoesService: ShoesService) {}
 
     @Get()
-    @Roles(UserRole.EDITOR)
     @UseGuards(RolesGuard)
-
+    @Roles(UserRole.USER)
     getShoes(
         @Query(ValidationPipe) shoesDTO: GetShoeDTO,
         @GetUser() user: User,
@@ -29,7 +29,6 @@ export class ShoesController {
     }
 
     @Get('/:id')
-    @UseFilters(new HttpExceptionFilter())
     getShoe(
         @Param('id') id: string,
         @GetUser() user: User,
