@@ -6,9 +6,9 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/user/schema/user.schema';
 import { UserRole } from 'src/user/user.role';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
-import { CreateShoeDTO } from './dtos/create-shoe.dto';
-import { GetShoeDTO } from './dtos/get-shoe.dto';
-import { Shoe } from './shoe.entity';
+import { CreateShoeDTO } from './dto/create-shoe.dto';
+import { GetShoeDTO } from './dto/get-shoe.dto';
+import { Shoe } from './schema/shoe.schema';
 import { ShoesService } from './shoes.service';
 
 @Controller('shoes')
@@ -28,7 +28,7 @@ export class ShoesController {
         return this.shoesService.getShoes(shoesDTO, user);
     }
 
-    @Get('/:id')
+    @Get(':id')
     getShoe(
         @Param('id') id: string,
         @GetUser() user: User,
@@ -45,27 +45,27 @@ export class ShoesController {
         return this.shoesService.createShoe(shoesDTO, user);
     }
 
-    @Put('/:id')
+    @Put(':id')
     @UsePipes(ValidationPipe)
     updateShoe(
         @Param('id') id: string,
         @Body() shoesDTO: CreateShoeDTO,
         @GetUser() user: User,
-    ): Promise<Shoe> { 
+    ) { 
         return this.shoesService.updateShoe(id, shoesDTO, user);
     }
 
-    @Patch('/:id')
-    @UsePipes(ValidationPipe)
-    archiveShoe(
-        @Param('id') id: string,
-        @Body('archived', ParseBoolPipe) archived: boolean,
-        @GetUser() user: User,
-    ): Promise<Shoe> { 
-        return this.shoesService.archiveShoe(id, archived, user);
-    }
+    // @Patch('/:id')
+    // @UsePipes(ValidationPipe)
+    // archiveShoe(
+    //     @Param('id') id: string,
+    //     @Body('archived', ParseBoolPipe) archived: boolean,
+    //     @GetUser() user: User,
+    // ) { 
+    //     return this.shoesService.archiveShoe(id, archived, user);
+    // }
 
-    @Delete('/:id')
+    @Delete(':id')
     @UsePipes(ValidationPipe)
     deleteShoe(
         @Param('id') id: string,

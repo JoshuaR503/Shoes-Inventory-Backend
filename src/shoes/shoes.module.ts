@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShoesService } from './shoes.service';
 import { ShoesController } from './shoes.controller';
-import { ShoeRepository } from './shoe.repository';
 import { AuthModule } from 'src/auth/auth.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Shoe, ShoeDocument } from './schema/shoe.schema';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ShoeRepository]),
+        MongooseModule.forFeature([
+            {
+              name: Shoe.name,
+              schema:  ShoeDocument
+            }
+        ]),
         AuthModule
     ],
     controllers: [ShoesController],

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ShoesModule } from './shoes/shoes.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     //   ]
     // }),
     MongooseModule.forRoot('mongodb://localhost/shoes', {useCreateIndex: true, useFindAndModify: false}),
-    // ShoesModule,
+    ShoesModule,
     AuthModule,
     UserModule,
   ],
