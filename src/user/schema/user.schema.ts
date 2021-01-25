@@ -1,9 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import * as bcrypt from 'bcryptjs';
-import { UserRole } from "../user.role";
-
 export type UserDocument = User & Document;
 
 @Schema({versionKey: false})

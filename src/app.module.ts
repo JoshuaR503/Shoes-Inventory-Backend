@@ -3,20 +3,12 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ShoesModule } from './shoes/shoes.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'mongodb',
-    //   url: 'mongodb://localhost/shoes',
-    //   synchronize: true,
-    //   useUnifiedTopology: true,
-    //   entities: [
-    //     Shoe,
-    //     User
-    //   ]
-    // }),
-    MongooseModule.forRoot('mongodb://localhost/shoes', {useCreateIndex: true, useFindAndModify: false}),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_ADMIN}:${process.env.DATABASE_PASSWORD}@cluster0.htdr4.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`, {useCreateIndex: true, useFindAndModify: false}),
     ShoesModule,
     AuthModule,
     UserModule,

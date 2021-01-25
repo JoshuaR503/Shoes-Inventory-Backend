@@ -84,7 +84,10 @@ export class ShoesService {
             {'quantity': regex},
             {'title': regex},
             {'size': regex},
-            {'note': regex}
+            {'note': regex},
+            {'magazinePrice': regex},
+            {'salePrice': regex},
+            {'specialPrice': regex}
         ])
         .exec()
         .catch((error) => {
