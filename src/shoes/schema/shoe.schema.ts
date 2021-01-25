@@ -30,6 +30,9 @@ export class Shoe {
     entryDate: string;
 
     @Prop()
+    createdAt: string;
+
+    @Prop()
     magazinePrice: string;
 
     @Prop()

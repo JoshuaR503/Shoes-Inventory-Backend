@@ -56,11 +56,12 @@ export class UserService {
    */
   async create(createUserDto: CreateUserDto): Promise<void> {
     /// Destructure data sent.
-    const {username, password, role} = createUserDto;
+    const {username, password, role, name} = createUserDto;
     const user =  new this.userModel();
 
     /// set properties.
     user.id = uuid();
+    user.name = name;
     user.username = username;
     user.password = bcrypt.hashSync(password, 12);
     user.role = role;

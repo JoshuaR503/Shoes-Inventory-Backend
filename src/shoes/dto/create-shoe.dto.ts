@@ -1,5 +1,4 @@
 import { IsOptional } from "class-validator";
-import { UserRole } from "src/user/user.role";
 
 export class CreateShoeDTO {
     @IsOptional()
@@ -28,6 +27,9 @@ export class CreateShoeDTO {
 
     @IsOptional()
     specialPrice: string;
+
+    @IsOptional()
+    status: string;
 
     @IsOptional()
     archived: boolean;

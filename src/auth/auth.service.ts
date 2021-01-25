@@ -51,7 +51,7 @@ export class AuthService {
    * @param authCredentialsDto the data sent by the user
    * @returns a token if all the checks pass
    */
-  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ token: string }> {
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<Object> {
 
     // Destructure data sent.
     const { username, password } = authCredentialsDto;
@@ -71,9 +71,13 @@ export class AuthService {
     /// If the app passes all the checks, sign a token.
     const token = this.jwtService.sign({ 
       id: dbUser.id,
-      role: dbUser.role 
+      role: dbUser.role,
     });
 
-    return { token };
+    return { 
+      token,
+      role: dbUser.role,
+      username
+     };
   }
 }

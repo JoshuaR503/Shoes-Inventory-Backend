@@ -1,9 +1,13 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
 
-export class GetShoeDTO {
+export class CountShoeDto {
     @IsOptional()
     @IsNotEmpty()
     search: string;
+
+    @IsOptional()
+    @IsNotEmpty()
+    color: string;
     
     @IsOptional()
     @IsNotEmpty()

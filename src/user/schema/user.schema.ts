@@ -11,6 +11,9 @@ export class User {
     @Prop()
     id: string;
 
+    @Prop()
+    name: string;
+
     @Prop({
         index: true,
         unique: true,

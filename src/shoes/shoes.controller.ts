@@ -1,15 +1,26 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post, Put, Query, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { 
+    Body, Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    Query,
+    UseFilters,
+    UseGuards,
+    UsePipes,
+    ValidationPipe 
+} from '@nestjs/common';
+
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/user/schema/user.schema';
-import { UserRole } from 'src/user/user.role';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import { CreateShoeDTO } from './dto/create-shoe.dto';
 import { GetShoeDTO } from './dto/get-shoe.dto';
 import { Shoe } from './schema/shoe.schema';
 import { ShoesService } from './shoes.service';
+import { CountShoeDto } from './dto/count-shoe.dto';
 
 @Controller('shoes')
 @UseGuards(AuthGuard())
@@ -18,14 +29,28 @@ export class ShoesController {
 
     constructor(private shoesService: ShoesService) {}
 
-    @Get()
-    // @UseGuards(RolesGuard)
-    // @Roles(UserRole.USER)
-    getShoes(
-        @Query(ValidationPipe) shoesDTO: GetShoeDTO,
+    @Get('count')
+    countShoes(
+        @Query(ValidationPipe) params: CountShoeDto,
         @GetUser() user: User,
-    ): Promise<Shoe[]> {
-        return this.shoesService.getShoes(shoesDTO, user);
+    ) {
+        return this.shoesService.countShoes(params, user);
+    }
+
+    @Get('search')
+    searchShoes(
+        @Query(ValidationPipe) params: GetShoeDTO,
+        @GetUser() user: User,
+    ) {
+        return this.shoesService.searchShoes(params, user);
+    }
+
+    @Get()
+    getShoes(
+        @Query(ValidationPipe) params: GetShoeDTO,
+        @GetUser() user: User,
+    ) {
+        return this.shoesService.getShoes(params, user);
     }
 
     @Get(':id')
@@ -52,6 +77,9 @@ export class ShoesController {
         @Body() shoesDTO: CreateShoeDTO,
         @GetUser() user: User,
     ) { 
+
+        console.log(shoesDTO);
+        
         return this.shoesService.updateShoe(id, shoesDTO, user);
     }
 
