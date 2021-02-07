@@ -25,20 +25,37 @@ export class ShoesService {
      * @param user the owner of the document
      * @returns an integer representing the amount of shoes matching the criteria.
      */
-    async countShoes(criteria: CountShoeDto, user: User) {
+    async shoesAnalytics(criteria: CountShoeDto, user: User) {
         const { archived } = criteria;
         const conditions = {
             userId: user.id,
-            archived: JSON.parse(String(archived)),
         };
 
-        return await this.shoeModel
-        .countDocuments(conditions)
-        .then((count) => count)
-        .catch((error) => {
+        try {
+            const total = await this.shoeModel.countDocuments({
+                archived: JSON.parse(String(archived)),
+                ...conditions
+            });
+
+            const totalSold = await this.shoeModel.countDocuments({
+                status: 'sold',
+                ...conditions
+            });
+
+            const totalIncome = await this.shoeModel.find({...conditions, status: 'sold'}, 'salePrice -_id');
+            const averagePrice = await this.shoeModel.find(conditions, 'salePrice -_id');
+
+            return {
+                total,
+                totalSold,
+                totalIncome: totalIncome.reduce((acc, c) => acc + Number(c['salePrice']), 0),
+                averagePrice: (averagePrice.reduce((acc, c) => acc + Number(c['salePrice']), 0) / averagePrice.length ).toFixed(2),
+                
+            }
+        } catch (error) {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
-        });
+        }
     }
 
     /**

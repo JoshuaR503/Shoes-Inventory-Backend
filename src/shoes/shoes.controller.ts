@@ -16,12 +16,12 @@ export class ShoesController {
 
     constructor(private shoesService: ShoesService) {}
 
-    @Get('count')
+    @Get('analytics')
     countShoes(
         @Query(ValidationPipe) params: CountShoeDto,
         @GetUser() user: User,
     ) {
-        return this.shoesService.countShoes(params, user);
+        return this.shoesService.shoesAnalytics(params, user);
     }
 
     @Get('search')
