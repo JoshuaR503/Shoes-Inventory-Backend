@@ -34,7 +34,7 @@ export class ShoesService {
 
         return await this.shoeModel
         .countDocuments(conditions)
-        .then((count) => JSON.stringify({'total': count}))
+        .then((count) => count)
         .catch((error) => {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
