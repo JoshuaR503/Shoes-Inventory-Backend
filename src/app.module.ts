@@ -5,6 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ShoesModule } from './shoes/shoes.module';
 import { ConfigModule } from '@nestjs/config';
 
+const prodUrl = ``;
+
+// const devUrl = `mongodb://localhost:27017/shoes`;
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
