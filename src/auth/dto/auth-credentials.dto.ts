@@ -8,11 +8,11 @@ export class AuthCredentialsDto {
   readonly username: string;
 
   @IsString()
-  @MinLength(8)
-  @MaxLength(20)
-  @Matches(
-    /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
-    { message: 'Password is too weak.' },
-  ) 
+  // @MinLength(8)
+  // @MaxLength(20)
+  // @Matches(
+  //   /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+  //   { message: 'Password is too weak.' },
+  // ) 
   readonly password: string;
 }
