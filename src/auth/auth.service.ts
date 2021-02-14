@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user/schema/user.schema';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { JwtPayload } from './guards/jwt-payload.interface';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 
@@ -76,8 +75,9 @@ export class AuthService {
 
     return { 
       token,
+      username,
       role: dbUser.role,
-      username
-     };
+      name: dbUser.name,
+    };
   }
 }

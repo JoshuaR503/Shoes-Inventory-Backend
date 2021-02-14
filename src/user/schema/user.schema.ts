@@ -8,8 +8,11 @@ export class User {
     @Prop()
     id: string;
 
-    @Prop()
+    @Prop({required: true})
     name: string;
+
+    @Prop({required: true})
+    email: string;
 
     @Prop({
         index: true,
@@ -17,7 +20,7 @@ export class User {
     })
     username: string;
 
-    @Prop()
+    @Prop({required: true})
     password: string;
 
     @Prop({default: 'user'})
