@@ -20,7 +20,7 @@ export class Shoe {
     @Prop({required: true})
     size: string;
 
-    @Prop({required: true})
+    @Prop()
     quantity: string;
 
     @Prop()
@@ -32,7 +32,7 @@ export class Shoe {
     @Prop()
     createdAt: string;
 
-    @Prop()
+    @Prop({required: true})
     magazinePrice: string;
 
     @Prop()
