@@ -50,8 +50,8 @@ export class ShoesService {
                 totalSold,
                 totalIncome: totalIncome.reduce((acc, c) => acc + Number(c['salePrice']), 0),
                 averagePrice: (averagePrice.reduce((acc, c) => acc + Number(c['salePrice']), 0) / averagePrice.length ).toFixed(2),
-                
             }
+            
         } catch (error) {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();

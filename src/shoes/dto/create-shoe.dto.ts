@@ -1,19 +1,14 @@
 import { IsOptional } from "class-validator";
 
-export class CreateShoeDTO {
-    @IsOptional()
+export class CreateShoeDTO {    
     title: string;
 
-    @IsOptional()
     writtenCode: string;
 
-    @IsOptional()
     color: string;
 
-    @IsOptional()
     size: string;
 
-    @IsOptional()
     quantity: string;
 
     @IsOptional()
@@ -28,12 +23,10 @@ export class CreateShoeDTO {
     @IsOptional()
     specialPrice: string;
 
-    @IsOptional()
     status: string;
 
     @IsOptional()
     archived: boolean;
 
-    @IsOptional()
     salePrice: string;
 }

@@ -8,19 +8,19 @@ export class Shoe {
     @Prop()
     id: string;
 
-    @Prop()
+    @Prop({required: true})
     title: string;
 
-    @Prop()
+    @Prop({required: true})
     writtenCode: string;
 
-    @Prop()
+    @Prop({required: true})
     color: string;
 
-    @Prop()
+    @Prop({required: true})
     size: string;
 
-    @Prop()
+    @Prop({required: true})
     quantity: string;
 
     @Prop()
@@ -38,10 +38,10 @@ export class Shoe {
     @Prop()
     specialPrice: string;
 
-    @Prop()
+    @Prop({required: true})
     status: string;
 
-    @Prop()
+    @Prop({required: true})
     salePrice: string;
 
     @Prop({default: false})

@@ -63,10 +63,7 @@ export class ShoesController {
         @Param('id') id: string,
         @Body() shoesDTO: CreateShoeDTO,
         @GetUser() user: User,
-    ) { 
-
-        console.log(shoesDTO);
-        
+    ) {         
         return this.shoesService.updateShoe(id, shoesDTO, user);
     }
 
