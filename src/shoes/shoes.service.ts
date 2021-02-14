@@ -154,7 +154,6 @@ export class ShoesService {
         return shoe
         .save()
         .catch((error) => {
-            console.log(error);
             this.logger.error("There was an error saving a document.", error.stack);
             throw new InternalServerErrorException();
         });
