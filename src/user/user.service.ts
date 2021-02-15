@@ -64,6 +64,7 @@ export class UserService {
     user.name = name;
     user.email = email;
     user.username = username;
+    user.verified = false;
     user.password = bcrypt.hashSync(password, 12);
     user.role = role;
 
