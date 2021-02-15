@@ -42,13 +42,24 @@ export class ShoesService {
                 ...conditions
             });
 
+
+            // const totalCost = await this.shoeModel.countDocuments()
+            const totalCost = await this.shoeModel.find({...conditions});
             const totalIncome = await this.shoeModel.find({...conditions, status: 'sold'}, 'salePrice -_id');
             const averagePrice = await this.shoeModel.find(conditions, 'salePrice -_id');
+
+            const TOTAL_COST = Number((totalCost.reduce((acc, c) => acc + Number(c['magazinePrice']), 0)).toFixed(2));
+            const TOTAL_INCOME =  totalIncome.reduce((acc, c) => acc + Number(c['salePrice']), 0);
+            const GROSS_EARNINGS = Number((TOTAL_INCOME - TOTAL_COST).toFixed(2));
 
             return {
                 total,
                 totalSold,
-                totalIncome: totalIncome.reduce((acc, c) => acc + Number(c['salePrice']), 0),
+                totalStored: total - totalSold,
+                totalCost: TOTAL_COST,
+                totalIncome: TOTAL_INCOME,
+                grossEarnings: GROSS_EARNINGS,
+                ROI: (TOTAL_INCOME / TOTAL_COST).toFixed(2),
                 averagePrice: (averagePrice.reduce((acc, c) => acc + Number(c['salePrice']), 0) / averagePrice.length ).toFixed(2),
             }
             
@@ -129,6 +140,7 @@ export class ShoesService {
         
         return await this.shoeModel
         .find(conditions)
+        .sort({createdAt: 'desc'})
         .catch((error) => {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
@@ -147,7 +159,7 @@ export class ShoesService {
             id: uuid(),
             ...data,
             userId: user.id,
-            createdAt: new Date(Date.now()).toLocaleDateString(),
+            createdAt: new Date(),
             entryDate: `${new Date(Date.now()).toLocaleDateString()} @ ${new Date(Date.now()).toLocaleTimeString()}`
         });
 
