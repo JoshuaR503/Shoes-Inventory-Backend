@@ -52,6 +52,8 @@ export class ShoesService {
             const TOTAL_INCOME =  totalIncome.reduce((acc, c) => acc + Number(c['salePrice']), 0);
             const GROSS_EARNINGS = Number((TOTAL_INCOME - TOTAL_COST).toFixed(2));
 
+            const INCREASE =  TOTAL_INCOME - TOTAL_COST;
+
             return {
                 total,
                 totalSold,
@@ -59,7 +61,7 @@ export class ShoesService {
                 totalCost: TOTAL_COST,
                 totalIncome: TOTAL_INCOME,
                 grossEarnings: GROSS_EARNINGS,
-                ROI: (TOTAL_INCOME / TOTAL_COST).toFixed(2),
+                ROI: (INCREASE / TOTAL_COST * 100).toFixed(2),
                 averagePrice: (averagePrice.reduce((acc, c) => acc + Number(c['salePrice']), 0) / averagePrice.length ).toFixed(2),
             }
             
