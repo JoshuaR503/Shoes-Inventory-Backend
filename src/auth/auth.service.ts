@@ -32,6 +32,7 @@ export class AuthService {
     user.username = username;
     user.name = name;
     user.email = email;
+    user.verified = false;
     user.password = bcrypt.hashSync(password, 12);
 
     await user
