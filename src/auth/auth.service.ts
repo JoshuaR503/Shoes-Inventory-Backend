@@ -22,7 +22,7 @@ export class AuthService {
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
 
     // Destructure data sent.
-    const { username, password } = authCredentialsDto;
+    const { username, name, email, password } = authCredentialsDto;
 
     /// Create new user.
     const user = new this.userModel();
@@ -30,11 +30,14 @@ export class AuthService {
     /// set properties
     user.id = uuid();
     user.username = username;
+    user.name = name;
+    user.email = email;
     user.password = bcrypt.hashSync(password, 12);
 
     await user
     .save()
     .catch((error) => {
+      console.log(error);
       if (error.code === 11000) {
         throw new ConflictException('The username has alreay been taken.');
       } else {

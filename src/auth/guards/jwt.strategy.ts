@@ -23,7 +23,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user = await this.userModel.findOne({id});
 
         if (!user) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException();   
+        }
+
+        if (!user.verified) {
+            throw new UnauthorizedException("You are not allowed to use this system.");
         }
 
         delete user.username;
