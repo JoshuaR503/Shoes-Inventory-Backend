@@ -25,6 +25,8 @@ export class CreateShoeDTO {
 
     status: string;
 
+    brad: string;
+
     @IsOptional()
     archived: boolean;
 

@@ -42,7 +42,6 @@ export class ShoesService {
                 ...conditions
             });
 
-
             // const totalCost = await this.shoeModel.countDocuments()
             const totalCost = await this.shoeModel.find({...conditions});
             const totalIncome = await this.shoeModel.find({...conditions, status: 'sold'}, 'salePrice -_id');

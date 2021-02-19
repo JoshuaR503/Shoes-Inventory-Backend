@@ -20,6 +20,9 @@ export class Shoe {
     @Prop({required: true})
     size: string;
 
+    @Prop({required: true})
+    brand: string;
+
     @Prop()
     quantity: string;
 
