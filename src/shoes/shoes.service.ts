@@ -141,7 +141,7 @@ export class ShoesService {
         
         return await this.shoeModel
         .find(conditions)
-        .sort({createdAt: 'desc'})
+        .sort({entryDate: 'desc'})
         .catch((error) => {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();

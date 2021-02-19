@@ -5,9 +5,13 @@ export class CreateShoeDTO {
 
     writtenCode: string;
 
+    @IsOptional()
     color: string;
 
+    @IsOptional()
     size: string;
+
+    brand: string;
 
     @IsOptional()
     quantity: string;
@@ -16,8 +20,6 @@ export class CreateShoeDTO {
     note: string;
 
     @IsOptional()
-    entryDate: string;
-
     magazinePrice: string;
 
     @IsOptional()
@@ -25,11 +27,9 @@ export class CreateShoeDTO {
 
     status: string;
 
-    brad: string;
 
     @IsOptional()
     archived: boolean;
 
-    @IsOptional()
     salePrice: string;
 }

@@ -84,4 +84,17 @@ export class AuthService {
       name: dbUser.name,
     };
   }
+
+  async refreshToken(user: User) {
+    
+    const token = this.jwtService.sign({ 
+      id: user.id,
+      role: user.role,
+    });
+    
+    return {
+      token,
+      username: user.username
+    }
+  }
 }

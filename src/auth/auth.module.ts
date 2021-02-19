@@ -14,7 +14,7 @@ import { User, UserSchema } from 'src/user/schema/user.schema';
     JwtModule.register({
       secret: 'secret', 
       signOptions: { 
-        expiresIn: '3400s'
+        expiresIn: '2h'
       }
     }),
     MongooseModule.forFeature([

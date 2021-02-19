@@ -14,10 +14,10 @@ export class Shoe {
     @Prop({required: true})
     writtenCode: string;
 
-    @Prop({required: true})
+    @Prop()
     color: string;
 
-    @Prop({required: true})
+    @Prop()
     size: string;
 
     @Prop({required: true})
@@ -35,7 +35,7 @@ export class Shoe {
     @Prop()
     createdAt: string;
 
-    @Prop({required: true})
+    @Prop()
     magazinePrice: string;
 
     @Prop()
