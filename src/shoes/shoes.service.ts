@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/user/schema/user.schema';
 import { CountShoeDto } from './dto/count-shoe.dto';
+import { doc } from 'prettier';
 
 @Injectable()
 export class ShoesService {
@@ -70,27 +71,7 @@ export class ShoesService {
         }
     }
 
-    /**
-     * Returns a document from the databse based on the id.
-     * 
-     * @param id the id of the document to look for
-     * @param user the owner of the document
-     * @returns the document from the database
-     */
-    async getShoe(id: string, user: User): Promise<Shoe> {
-        /// Get shoe from db when matches the shoe id and user id.
-        const document = await this.shoeModel.findOne({id: id, userId: user.id});
-        
-        /// Handle errors (if any).
-        if (!document) {
-            throw new HttpException(HttpExceptionMessages.NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
-
-        /// Return document
-        return document;
-    }
-
-    /**
+     /**
      * Returns all the documents from the database.
      * 
      * @param data a set of parameters
@@ -123,6 +104,26 @@ export class ShoesService {
             this.logger.error("There was an error getting documents.", error.stack);
             throw new InternalServerErrorException();
         });
+    }
+
+    /**
+     * Returns a document from the databse based on the id.
+     * 
+     * @param id the id of the document to look for
+     * @param user the owner of the document
+     * @returns the document from the database
+     */
+    async getShoe(id: string, user: User): Promise<Shoe> {
+        /// Get shoe from db when matches the shoe id and user id.
+        const document = await this.shoeModel.findOne({id: id, userId: user.id});
+        
+        /// Handle errors (if any).
+        if (!document) {
+            throw new HttpException(HttpExceptionMessages.NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        /// Return document
+        return document;
     }
 
     /**
@@ -165,6 +166,38 @@ export class ShoesService {
         });
 
         return shoe
+        .save()
+        .catch((error) => {
+            this.logger.error("There was an error saving a document.", error.stack);
+            throw new InternalServerErrorException();
+        });
+    }
+
+    /**
+     * Creates a copy of a Shoe document in the database and returns the result.
+     * 
+     * @param data the document data
+     * @param user the creator of the document
+     * @returns the created document in the database
+     */
+    async createShoeCopy(id: string, user: User) {
+
+        const document = await this.shoeModel.findOne({id: id, userId: user.id});
+        const documentCopy = document.toObject();
+
+        delete documentCopy._id;
+        delete documentCopy.id;
+        delete documentCopy.createdAt;
+        delete documentCopy.entryDate;
+
+        const documentShoe = await this.shoeModel.create({
+            ...documentCopy,
+            id: uuid(),
+            createdAt: new Date(),
+            entryDate: `${new Date(Date.now()).toLocaleDateString()} @ ${new Date(Date.now()).toLocaleTimeString()}`
+        });
+
+        return documentShoe
         .save()
         .catch((error) => {
             this.logger.error("There was an error saving a document.", error.stack);

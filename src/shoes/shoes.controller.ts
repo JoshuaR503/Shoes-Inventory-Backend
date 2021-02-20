@@ -47,6 +47,14 @@ export class ShoesController {
     ): Promise<Shoe> {
         return this.shoesService.getShoe(id, user);
     }
+
+    @Post('/c/:id')
+    createShoeCopy(
+        @Param('id') id: string,
+        @GetUser() user: User,
+    ) { 
+        return this.shoesService.createShoeCopy(id, user);
+    }
     
     @Post()
     @UsePipes(ValidationPipe)
